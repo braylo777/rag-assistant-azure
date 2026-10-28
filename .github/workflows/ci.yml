@@ -1,0 +1,18 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm test
+      - run: npm run build
+  infra:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: curl -sSfL -o bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64 && chmod +x bicep && ./bicep build infra/bicep/main.bicep --stdout > /dev/null && ./bicep lint infra/bicep/main.bicep
+      - uses: hashicorp/setup-terraform@v3
+      - run: cd infra/terraform && terraform fmt -check && terraform init -backend=false && terraform validate

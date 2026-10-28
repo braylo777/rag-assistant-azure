@@ -1,0 +1,10 @@
+node_modules/
+.wrangler/
+.dev.vars
+*.log
+dist/
+.terraform/
+*.tfstate*
+.terraform.lock.hcl
+*.tfvars
+.env

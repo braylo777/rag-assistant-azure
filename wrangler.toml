@@ -1,0 +1,10 @@
+# Cloudflare target for the Azure-ready port. Deployed in local mode (no AI/Vectorize/KV bindings):
+# BM25 retrieval + extractive answers. To enable models on Cloudflare, add the bindings from braylo-si-rag.
+name = "rag-assistant-azure"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true
